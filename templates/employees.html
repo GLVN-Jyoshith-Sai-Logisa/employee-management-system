@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Management System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="topbar">
+        <h1>👥 Employees</h1>
+        <a href="/add" class="btn-add">+ Add Employee</a>
+    </div>
+
+    <form method="GET" action="/employees" class="search-bar">
+        <input type="text" name="q" placeholder="Search by name or department" value="{{ query }}">
+        <button type="submit">Search</button>
+        <a href="/employees" class="clear-link">Clear</a>
+    </form>
+
+    <div class="card-grid">
+        {% for e in employees %}
+        <div class="employee-card">
+            <div class="avatar">{{ e.name[0] }}</div>
+            <h3>{{ e.name }}</h3>
+            <p class="position">{{ e.position }}</p>
+            <span class="badge">{{ e.department }}</span>
+            <p class="detail">📧 {{ e.email }}</p>
+            <p class="detail">📞 {{ e.phone }}</p>
+            <p class="salary">₹{{ e.salary }}</p>
+            <div class="card-actions">
+                <a href="/edit/{{ e.id }}">Edit</a>
+                <a href="/delete/{{ e.id }}" onclick="return confirm('Delete this employee?')">Delete</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
